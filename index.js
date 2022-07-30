@@ -8,6 +8,7 @@ let homeContent = "";
 let projectContent = "";
 let notFoundContent = "";
 let surveyContent = "";
+let scriptContent = "";
 
 console.log("Kindly use 'pages/survey.html' as the survey file path");
 
@@ -44,6 +45,12 @@ lineDetail.question(`Please provide the full file path to survey.html :> `, (pat
     }
     surveyContent = survey;
   });
+  fs.readFile("pages/script.js", function (err, script) {
+    if (err) {
+      throw err;
+    }
+    scriptContent = script;
+  });
 
   http
     .createServer(function (request, response) {
@@ -61,6 +68,10 @@ lineDetail.question(`Please provide the full file path to survey.html :> `, (pat
           break;
         case "/survey":
           response.write(surveyContent);
+          response.end();
+          break;
+        case "/script.js":
+          response.write(scriptContent);
           response.end();
           break;
         default:
